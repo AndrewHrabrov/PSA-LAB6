@@ -24,6 +24,11 @@ parser.add_argument('-s', '--set',
                     required=True,
                     help='Set of symbols, that using in generate passwords! Minimum 10')
 
+args = parser.parse_args()
+if len(args.set) < 10:
+    parser.print_help()
+    exit(0)
+
 class Password:
     def __init__(self, set_symbols):
         self.set_symbols = set_symbols
@@ -36,11 +41,6 @@ class Password:
         password = "".join(secrets.choice(password + "".join(self.required_symbols))
                         for _ in range(len(password + "".join(self.required_symbols))))
         return password
-
-args = parser.parse_args()
-if len(args.set) < 10:
-    parser.print_help()
-    exit(0)
 
 password_generator = Password(args.set)
 for i in range(args.count):
