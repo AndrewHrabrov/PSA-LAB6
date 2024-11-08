@@ -1,6 +1,29 @@
 import argparse
 import secrets
 
+parser = argparse.ArgumentParser(
+    prog = 'Generator of passwords',
+    description = 'Program generate passwords',
+    epilog = 'Enter a length of passwords, set of symbols n number of generate passwords'
+)
+
+parser.add_argument('-l', '--len',
+                    type=int,
+                    required=True,
+                    choices=range(5, 101),
+                    help='length of passwords')
+
+parser.add_argument('-c', '--count',
+                    type=int,
+                    required=True,
+                    choices=range(1, 51),
+                    help='Count of passwords')
+
+parser.add_argument('-s', '--set',
+                    type=str,
+                    required=True,
+                    help='Set of symbols, that using in generate passwords! Minimum 10')
+
 class Password:
     def __init__(self, set_symbols):
         self.set_symbols = set_symbols
@@ -13,29 +36,6 @@ class Password:
         password = "".join(secrets.choice(password + "".join(self.required_symbols))
                         for _ in range(len(password + "".join(self.required_symbols))))
         return password
-
-parser = argparse.ArgumentParser(
-    prog = 'Generator of passwords',
-    description = 'Program generate passwords',
-    epilog = 'Enter a length of passwords, set of symbols n number of generate passwords'
-)
-
-parser.add_argument('-l', '--len',
-                    type=int,
-                    required=True,
-                    choices=range(5, 100),
-                    help='length of passwords')
-
-parser.add_argument('-c', '--count',
-                    type=int,
-                    required=True,
-                    choices=range(1, 20),
-                    help='Count of passwords')
-
-parser.add_argument('-s', '--set',
-                    type=str,
-                    required=True,
-                    help='Set of symbols, that using in generate passwords! Minimum 10')
 
 args = parser.parse_args()
 if len(args.set) < 10:
